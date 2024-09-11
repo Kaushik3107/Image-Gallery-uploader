@@ -1,0 +1,22 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const postRoutes = require('./routes/postRoutes');
+
+const app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use('/uploads', express.static('uploads'));
+app.use('/posts', postRoutes);
+
+mongoose.connect('mongodb+srv://kaushikdange3107:EN2GXAAyYgao5laN@cluster0.uzvrf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log('MongoDB Connected'));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
